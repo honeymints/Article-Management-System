@@ -41,3 +41,5 @@ C:\Users\aruch\RiderProjects\WebApiProject\WebApiProject\bin\Debug\net7.0\Mono.T
 C:\Users\aruch\RiderProjects\WebApiProject\WebApiProject\bin\Debug\net7.0\Npgsql.dll
 C:\Users\aruch\RiderProjects\WebApiProject\WebApiProject\bin\Debug\net7.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\aruch\RiderProjects\WebApiProject\WebApiProject\bin\Debug\net7.0\System.CodeDom.dll
+C:\Users\aruch\RiderProjects\WebApiProject\WebApiProject\bin\Debug\net7.0\AutoMapper.dll
+C:\Users\aruch\RiderProjects\WebApiProject\WebApiProject\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

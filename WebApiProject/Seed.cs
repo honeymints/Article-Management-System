@@ -34,8 +34,11 @@ public class Seed
                         {
                             new CategoryArticles() { Category = new Category(){ CategoryType = "Confession"} }
                         },
+                        
                     },
-                    Author =  new Author(){ Name = "Aruzhan", Surname = "Ismagulova"}
+                    Author =  new Author(){ Name = "Aruzhan", Surname = "Ismagulova"
+                    },
+                    
                 },
                 new AuthorArticles()
                 {
