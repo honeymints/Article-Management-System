@@ -9,4 +9,7 @@ public interface IArticleRepository
     public Article GetArticle(string name);
     public bool ArticleExists(int id);
 
+    public ICollection<Comment> GetCommentsByArticle(int id);
+
+
 }

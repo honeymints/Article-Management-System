@@ -16,6 +16,10 @@ builder.Services.AddControllers();
 builder.Services.AddTransient<Seed>(); //add service to add seeded data
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies()); //TODO:to understand what does this do(1)
 builder.Services.AddScoped<IArticleRepository, ArticleRepository>(); // add article service
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
+builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

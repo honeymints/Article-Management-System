@@ -52,6 +52,20 @@ public class ArticleController : Controller
         return Ok(article);
     }
     
-    
-    
+    [HttpGet("{articleId}/comments")]
+    [ProducesResponseType(200, Type = typeof(IEnumerable<Comment>))]
+    public IActionResult GetCommentsByArticle(int articleId)
+    {
+        if (!_article.ArticleExists(articleId))
+        {
+            return NotFound();
+        }
+        var comments = _mapper.Map<List<CommentDto>>(_article.GetCommentsByArticle(articleId));
+        if (!ModelState.IsValid)
+        {
+            return BadRequest();
+        }
+
+        return Ok(comments);
+    }
 }
