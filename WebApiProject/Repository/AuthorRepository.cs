@@ -35,6 +35,11 @@ public class AuthorRepository : IAuthorRepository
         return Save();
     }
 
+    public bool UpdateAuthor(Author author)
+    {
+        throw new NotImplementedException();
+    }
+
     public bool Save()
     {
         var saved = _dbContext.SaveChanges();

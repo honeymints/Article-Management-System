@@ -31,6 +31,11 @@ public class CommentRepository : ICommentRepository
         return Save();
     }
 
+    public bool UpdateComment(Comment comment)
+    {
+        throw new NotImplementedException();
+    }
+
     public bool Save()
     {
         var saved = _dbContext.SaveChanges();

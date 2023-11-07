@@ -56,11 +56,7 @@ public class ArticleRepository : IArticleRepository
             Article = article,
             Category = category
         };
-        article.CategoriesList = new List<CategoryArticles>()
-        {
-            categoryArticles
-        };
-        //  Object reference not set to an instance of an object.
+        
         _context.Add(categoryArticles);
         
         _context.Add(article);

@@ -6,7 +6,6 @@ public class Author
     public string Name { get; set; }
     public string Surname { get; set; }
     public ICollection<AuthorArticles> ArticlesCollection { get; set; }
-
     
 }
 

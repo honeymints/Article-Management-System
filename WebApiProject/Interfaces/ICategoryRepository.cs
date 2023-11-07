@@ -9,10 +9,17 @@ public interface ICategoryRepository
     /*public List<Category> GetCategoriesByName(string name);*/
     public bool CategoryExists(int id);
 
+    public bool CategoryExists(string categoryType);
     public ICollection<Article> GetArticlesByCategory(int id);
+    public Category GetCategory(int id);
     
     public bool CreateCategory(Category category);
     public bool Save();
 
-    public Category GetCategory(int id);
+    public bool UpdateCategory(Category category);
+    public bool DeleteCategory(Category category);
+
+
+
+
 }

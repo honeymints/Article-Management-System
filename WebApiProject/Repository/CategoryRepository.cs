@@ -25,6 +25,11 @@ public class CategoryRepository : ICategoryRepository
         return _dbContext.Categories.Any(p=>p.Id==id);
     }
 
+    public bool CategoryExists(string categoryType)
+    {
+        return _dbContext.Categories.Any(c => c.CategoryType.Trim().ToLower() == categoryType.Trim().ToLower());
+    }
+
     public ICollection<Article> GetArticlesByCategory(int id)
     {
         var articles = _dbContext.CategoryArticles.Where(p => p.CategoryId == id).Select(p => p.Article).ToList();
@@ -46,6 +51,18 @@ public class CategoryRepository : ICategoryRepository
     {
         var saved= _dbContext.SaveChanges();
         return saved > 0 ? true : false;
+    }
+
+    public bool UpdateCategory(Category category)
+    {
+        _dbContext.Update(category);
+        return Save();
+    }
+
+    public bool DeleteCategory(Category category)
+    {
+        _dbContext.Remove(category);
+        return Save();
     }
 
     public Category GetCategory(int id)

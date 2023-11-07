@@ -82,4 +82,54 @@ public class CategoryController : Controller
         }
         return Ok("Successfully created");
     }
+
+    [HttpPut("{categoryId}")]
+    [ProducesResponseType(204)]
+    public IActionResult UpdateCategory(int categoryId, [FromBody] CategoryDto updatedCategory)
+    {
+        if (updatedCategory == null)
+        {
+            return BadRequest(ModelState);
+        }
+        if (!_categoryRepository.CategoryExists(categoryId))
+        {
+            return NotFound();
+        }
+        
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        var category = _mapper.Map<Category>(updatedCategory);
+        category.Id = categoryId;
+        if (_categoryRepository.CategoryExists(updatedCategory.CategoryType))
+        {
+            ModelState.AddModelError("", "such category type already exists");
+            return StatusCode(422, ModelState);
+        }
+        if (!_categoryRepository.UpdateCategory(category))
+        {
+            ModelState.AddModelError("","couldn't update category");
+            return StatusCode(500, ModelState);
+        }
+        
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    [ProducesResponseType(204)]
+    public IActionResult DeleteCategory(int id)
+    {
+        if (!_categoryRepository.CategoryExists(id))
+            return NotFound();
+        
+        var categoryToDelete = _categoryRepository.GetCategory(id);
+        if (!_categoryRepository.DeleteCategory(categoryToDelete))
+        {
+            ModelState.AddModelError("","couldn't delete category");
+            return StatusCode(422, ModelState);
+        }
+        return NoContent();
+    }
 }
