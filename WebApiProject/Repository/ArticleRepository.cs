@@ -42,5 +42,34 @@ public class ArticleRepository : IArticleRepository
         //var comments=_dbContext.Comments.Where(c=>c.Id==id).Select(a=>a.Article)
     }
 
-    
+    public bool CreateArticle(Author author, Category category, Article article)
+    {
+        AuthorArticles authorArticles = new()
+        {
+            Author = author,
+            Article = article
+        };
+        _context.Add(authorArticles);
+        
+        CategoryArticles categoryArticles = new()
+        {
+            Article = article,
+            Category = category
+        };
+        article.CategoriesList = new List<CategoryArticles>()
+        {
+            categoryArticles
+        };
+        //  Object reference not set to an instance of an object.
+        _context.Add(categoryArticles);
+        
+        _context.Add(article);
+        return Save();
+    }
+
+    public bool Save()
+    {
+        var saved = _context.SaveChanges();
+        return saved > 0 ? true : false;
+    }
 }

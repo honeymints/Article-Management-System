@@ -1,4 +1,5 @@
-﻿using WebApiProject.Data;
+﻿using System.Xml.Linq;
+using WebApiProject.Data;
 using WebApiProject.Interfaces;
 using WebApiProject.Models;
 
@@ -33,5 +34,23 @@ public class CategoryRepository : ICategoryRepository
     public ICollection<Article> GetArticlesByCategory(string type)
     {
         throw new NotImplementedException();
+    }
+
+    public bool CreateCategory(Category category)
+    {
+        _dbContext.Add(category);
+        return Save();
+    }
+
+    public bool Save()
+    {
+        var saved= _dbContext.SaveChanges();
+        return saved > 0 ? true : false;
+    }
+
+    public Category GetCategory(int id)
+    {
+        var category = _dbContext.Categories.Where(c => c.Id == id).FirstOrDefault();
+        return category;
     }
 }

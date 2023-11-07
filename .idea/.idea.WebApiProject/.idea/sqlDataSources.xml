@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DdlMappings">
-    <mapping uuid="b7dcdc9d-64b0-4786-9f0e-285fd0feae6d" name="postgres@localhost Mapping">
-      <data-sources db="4a828e1c-5fcc-4f0e-a59c-92848a9bba95" />
-      <scope>
-        <node kind="database" qname="quotes" />
-      </scope>
+    <mapping uuid="cabf14e2-e4a5-4aaa-8f3a-c438ec4bf133" name="@localhost Mapping">
+      <data-sources db="c3e965f1-894f-4c84-abae-1ac5938dd623" />
     </mapping>
   </component>
 </project>

@@ -11,5 +11,8 @@ public interface IArticleRepository
 
     public ICollection<Comment> GetCommentsByArticle(int id);
 
+    public bool CreateArticle(Author author, Category category, Article article);
+    public bool Save();
+
 
 }

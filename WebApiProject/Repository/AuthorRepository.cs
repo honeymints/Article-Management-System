@@ -28,4 +28,16 @@ public class AuthorRepository : IAuthorRepository
         var author = _dbContext.Authors.Where(p => p.Id == id).FirstOrDefault();
         return author;
     }
+
+    public bool CreateAuthor(Author author)
+    {
+        _dbContext.Add(author);
+        return Save();
+    }
+
+    public bool Save()
+    {
+        var saved = _dbContext.SaveChanges();
+        return saved > 0 ? true : false;
+    }
 }

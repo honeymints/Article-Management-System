@@ -8,4 +8,8 @@ public interface IUserRepository
     public User GetUser(int id);
     public List<Comment> GetCommentsByUser(int id);
 
+    public bool CreateUser(User user);
+
+    public bool Save();
+
 }

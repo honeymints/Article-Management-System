@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using WebApiProject.Dto;
 using WebApiProject.Interfaces;
 using WebApiProject.Models;
@@ -10,11 +11,15 @@ namespace WebApiProject.Controllers;
 [ApiController]
 public class CommentController : Controller
 {
+    private readonly IArticleRepository _articleRepository;
+    private readonly IUserRepository _userRepository;
     private readonly ICommentRepository _commentRepository;
     private readonly IMapper _mapper;
 
-    public CommentController(ICommentRepository commentRepository, IMapper mapper)
+    public CommentController(IArticleRepository articleRepository, IUserRepository userRepository, ICommentRepository commentRepository, IMapper mapper)
     {
+        _articleRepository = articleRepository;
+        _userRepository = userRepository;
         _commentRepository = commentRepository;
         _mapper = mapper;
     }
@@ -42,5 +47,34 @@ public class CommentController : Controller
         }
 
         return Ok(author);
+    }
+
+    [HttpPost("/{articleId}/comment")]
+    [ProducesResponseType(201)]
+    public IActionResult CreateComment([FromQuery] int userId, int articleId, [FromBody] CommentDto? commentDto)
+    {
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        var user = _userRepository.GetUser(userId);
+        var article = _articleRepository.GetArticle(articleId);
+        
+        if (user == null || article==null)
+        {
+            ModelState.AddModelError("","there is no such user or article");
+            return StatusCode(422, ModelState);
+        }
+
+        
+        var commentCreate = _mapper.Map<Comment>(commentDto);
+
+        if (!_commentRepository.CreateComment(article, user, commentCreate))
+        {
+            ModelState.AddModelError("","couldn't add comment to db");
+            return StatusCode(500, ModelState);
+        }
+
+        return Ok("Successfully created");
     }
 }

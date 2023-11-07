@@ -11,6 +11,8 @@ public interface ICategoryRepository
 
     public ICollection<Article> GetArticlesByCategory(int id);
     
-    public ICollection<Article> GetArticlesByCategory(string type);
+    public bool CreateCategory(Category category);
+    public bool Save();
 
+    public Category GetCategory(int id);
 }

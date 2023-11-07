@@ -8,10 +8,11 @@ public class Mapper : Profile
 {
     public Mapper()
     {
-        CreateMap<Article, ArticleDto>();
-        CreateMap<Category, CategoryDto>();
-        CreateMap<Author, AuthorDto>();
-        CreateMap<Comment, CommentDto>();
-        CreateMap<User, UserDto>();
+        CreateMap<Article, ArticleDto>().ReverseMap();
+        CreateMap<Category, CategoryDto>().ReverseMap();
+        CreateMap<Author, AuthorDto>().ReverseMap();
+        CreateMap<Comment, CommentDto>().ReverseMap();
+        CreateMap<User, UserDto>().ReverseMap();
+        
     }
 }

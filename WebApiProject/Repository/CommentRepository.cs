@@ -22,5 +22,18 @@ public class CommentRepository : ICommentRepository
         var comment = _dbContext.Comments.Where(u => u.Id == id).FirstOrDefault();
         return comment;
     }
-    
+
+    public bool CreateComment(Article article, User user, Comment comment)
+    {
+        comment.User = user;
+        comment.Article = article;
+        _dbContext.Add(comment);
+        return Save();
+    }
+
+    public bool Save()
+    {
+        var saved = _dbContext.SaveChanges();
+        return saved > 0 ? true : false;
+    }
 }

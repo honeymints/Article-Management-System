@@ -33,7 +33,7 @@ public class UserController : Controller
     
     [HttpGet("{Id}/comments")]
     [ProducesResponseType(200, Type=typeof(IEnumerable<Article>))]
-    public IActionResult GetArticleByCategory(int Id)
+    public IActionResult GetCommentsByUser(int Id)
     {
         
         var coments = _mapper.Map<List<CommentDto>>(_userRepository.GetCommentsByUser(Id));
@@ -57,5 +57,32 @@ public class UserController : Controller
         }
 
         return Ok(categories);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(201)]
+    public IActionResult CreateUser([FromBody] UserDto? userDto)
+    {
+        var user = _userRepository.GetUser(userDto.Id);
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+        
+        if (user != null)
+        {
+            ModelState.AddModelError("","such user already exists");
+            return StatusCode(422, ModelState);
+        }
+
+        var userCreate = _mapper.Map<User>(userDto);
+        if (!_userRepository.CreateUser(userCreate))
+        {
+            ModelState.AddModelError("", "couldn't add user to database");
+            return StatusCode(500, ModelState);
+        }
+
+        return Ok();
+
     }
 }

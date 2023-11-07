@@ -30,4 +30,16 @@ public class UserRepository : IUserRepository
         var comments = _dbContext.Comments.Where(u=>u.User.Id==id).ToList();
         return comments;
     }
+
+    public bool CreateUser(User user)
+    {
+        _dbContext.Add(user);
+        return Save();
+    }
+
+    public bool Save()
+    {
+        var saved = _dbContext.SaveChanges();
+        return saved > 0 ? true : false;
+    }
 }

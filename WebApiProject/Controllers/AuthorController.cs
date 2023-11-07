@@ -57,4 +57,33 @@ public class AuthorController : Controller
 
         return Ok(articles);
     }
+
+    [HttpPost]
+    [ProducesResponseType(201)]
+    public IActionResult CreateAuthor([FromBody] AuthorDto authorDto)
+    {
+        var author = _authorRepository.GetAuthor(authorDto.Id);
+        if (author != null)
+        {
+            ModelState.AddModelError("", "such author already exists");
+            return StatusCode(422, ModelState);
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var authorCreate = _mapper.Map<Author>(authorDto);
+
+        if (!_authorRepository.CreateAuthor(authorCreate))
+        {
+            ModelState.AddModelError("","couldn't add author to db");
+            return StatusCode(500, ModelState);
+        }
+
+        return Ok("Successfully created!");
+
+    }
+    
 }

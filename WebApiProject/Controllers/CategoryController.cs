@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Npgsql;
 using WebApiProject.Dto;
 using WebApiProject.Interfaces;
 using WebApiProject.Models;
@@ -48,5 +49,37 @@ public class CategoryController : Controller
         }
 
         return Ok(article);
+    }
+
+    [HttpPost]
+    [ProducesResponseType(204)]
+
+    public IActionResult CreateCategory([FromBody] CategoryDto? categoryDto)
+    {
+        if (categoryDto == null)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var category = _categoryRepository.GetCategories().FirstOrDefault(c => c.CategoryType.Trim().ToUpper()== categoryDto.CategoryType.Trim().ToUpper());
+        if (category != null)
+        {
+            ModelState.AddModelError("","category already exists");
+            return StatusCode(422, ModelState);
+        }
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
+
+        var categoryMap = _mapper.Map<Category>(categoryDto);
+        
+        if (!_categoryRepository.CreateCategory(categoryMap))
+        {
+            ModelState.AddModelError("", "couldn't add data into database");
+            return StatusCode(500, ModelState);
+        }
+        return Ok("Successfully created");
     }
 }
